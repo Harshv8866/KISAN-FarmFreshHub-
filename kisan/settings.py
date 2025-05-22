@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Use SECRET_KEY from environment variable, fallback to insecure key for dev only

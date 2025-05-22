@@ -150,7 +150,7 @@
     
     
 </style>
-
+{% load static %}
 <div class="container my-5">
     <h2 class="text-center mb-4">All Products</h2>
     <div class="row">
@@ -158,9 +158,9 @@
         <div class="col-md-4 mb-4">
             <div class="card h-100 clickable-card" onclick="handleProductClick({{ product.id }})">
                 {% if product.image %}
-{% load static %}
 
-<img src="{% static 'img/'|add:product.image_name %}" class="card-img-top" alt="{{ product.name }}">
+
+<img src="{% static 'img/product_images/' %}{{ product.image.name|slice:'15:' }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
                     <img src="" class="card-img-top" alt="No Image">
                 {% endif %}
