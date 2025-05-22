@@ -160,7 +160,7 @@
                 {% if product.image %}
 
 
-<img src="{% static 'img/product_images/' %}{{ product.image.name|slice:'15:' }}" class="card-img-top" alt="{{ product.name }}">
+<img src="{% static product.image.name %}" alt="{{ product.name }}">
                 {% else %}
                     <img src="" class="card-img-top" alt="No Image">
                 {% endif %}
