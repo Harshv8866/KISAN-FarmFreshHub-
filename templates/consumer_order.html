@@ -1,0 +1,129 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Consumer Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+
+
+.orders-container {
+    padding: 30px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.orders-heading {
+    font-size: 26px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #2ecc71;
+    padding-bottom: 10px;
+    color: #2ecc71;
+}
+
+.order-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-header,
+.order-status-price {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.status.paid {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.status.pending {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.order-items {
+    margin-top: 15px;
+}
+
+.item-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+}
+
+.item-row:first-child {
+    border-top: none;
+}
+
+.item-row img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+    border: 1px solid #ccc;
+}
+
+.item-info p {
+    margin: 3px 0;
+    font-size: 14px;
+}
+
+.item-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.no-orders {
+    color: #888;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+
+
+</style>
+
+    
+<div class="orders-container">
+    <h2 class="orders-heading">🧾 Your Orders</h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-box">
+                <div class="order-header">
+                    <span><strong>Order ID:</strong> #{{ order.id }}</span>
+                    <span><strong>Date:</strong> {{ order.created_at|date:"d M Y, h:i A" }}</span>
+                </div>
+                <div class="order-status-price">
+                    <span><strong>Status:</strong> 
+                        <span class="status {% if order.is_paid %}paid{% else %}pending{% endif %}">
+                            {% if order.is_paid %}Paid{% else %}Pending{% endif %}
+                        </span>
+                    </span>
+                    <span><strong>Total:</strong> ₹{{ order.amount }}</span>
+                </div>
+
+                <!-- 👇 Track Order Button -->
+                <div class="track-order-btn">
+                    <a href="{% url 'track_order' order.id %}" class="btn btn-sm btn-outline-success">Track Order</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-orders">You haven't placed any orders yet.</p>
+    {% endif %}
+</div>
+
+    
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="dashboard/">Home</a></li>
+            <li><a href="edit-profile/">Edit Profile</a></li>
+            <li>
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="40">
+                {{ user.first_name }} {{ user.last_name }}
+            </li>
+        </ul>
+    </nav>
+    
+
+    
+    {% block content %}{% endblock %}
+</body>
+</html>

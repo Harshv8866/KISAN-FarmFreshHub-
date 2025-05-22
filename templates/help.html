@@ -1,0 +1,105 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<style>
+    .help-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        color: #333;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .help-heading {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #4CAF50;
+        text-align: center;
+    }
+    
+    .intro-text {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .help-section {
+        margin-bottom: 30px;
+        border-left: 4px solid #4CAF50;
+        padding-left: 15px;
+    }
+    
+    .help-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    .help-section ul {
+        padding-left: 20px;
+        margin: 0;
+    }
+    
+    .help-section ul li {
+        margin-bottom: 8px;
+    }
+    
+    .help-section a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+    .help-section a:hover {
+        text-decoration: underline;
+    }
+    
+
+</style>
+<div class="help-container">
+    <h1 class="help-heading">❓ Help & Support</h1>
+    <p class="intro-text">Need assistance? We’re here to guide you through every step.</p>
+
+    <div class="help-section">
+        <h2>📦 How to Place an Order</h2>
+        <ul>
+            <li>Browse the homepage or product categories.</li>
+            <li>Click on a product to view its details and add it to your cart.</li>
+            <li>Go to your cart and click “Checkout”.</li>
+            <li>Enter your shipping details and complete payment.</li>
+        </ul>
+    </div>
+
+    <div class="help-section">
+        <h2>💳 Payments</h2>
+        <ul>
+            <li>We support Razorpay for secure online payments (UPI, cards, etc.).</li>
+            <li>If your payment fails, check your internet connection or contact your bank.</li>
+        </ul>
+    </div>
+
+    <div class="help-section">
+        <h2>🚚 Shipping & Delivery</h2>
+        <ul>
+            <li>Delivery is available within 2–5 business days.</li>
+            <li>You can track your orders from the “Orders” section.</li>
+        </ul>
+    </div>
+
+    <div class="help-section">
+        <h2>👤 Account Help</h2>
+        <ul>
+            <li>Update your profile and picture in your dashboard.</li>
+            <li>Use “Forgot Password” on the login page to reset your password.</li>
+        </ul>
+    </div>
+
+    <div class="help-section">
+        <h2>📞 Contact Us</h2>
+        <p>If you still need help, email us at <a href="mailto:support@kisaneco.com">support@kisaneco.com</a> or call us at 📱 +91-9876543210.</p>
+    </div>
+</div>
+{% endblock %}

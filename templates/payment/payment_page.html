@@ -1,0 +1,153 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+<style>
+    .payment-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 40px;
+        /* background-image: url(/static/img/consumer-login-bg1.avif);
+        background-repeat: no-repeat;
+        background-size: cover; */
+        background: linear-gradient(to right, #1e520692, #42141470);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        color: #fff;
+    }
+
+    h2 {
+        font-size: 2.5em;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .summary-item {
+        background: #fff;
+        color: #333;
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .summary-item span:first-child {
+        font-weight: 500;
+    }
+
+    .total-section {
+        margin-top: 30px;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    button {
+        margin-top: 30px;
+        width: 100%;
+        padding: 14px;
+        font-size: 1.2em;
+        background-color: #333;
+        border: none;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #222;
+    }
+
+    .terms {
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 40px;
+        font-size: 0.95em;
+    }
+
+    .terms h4 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .terms ul {
+        padding-left: 20px;
+    }
+
+    .terms li {
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+</style>
+
+<div class="payment-container">
+    <h2>Payment Summary</h2>
+
+    {% if cart and cart.cart_items.all %}
+        {% for item in cart.cart_items.all %}
+            <div class="summary-item">
+                <span>{{ item.product.name }} ({{ item.quantity }})</span>
+                <span>₹{{ item.total_price }}</span>
+            </div>
+        {% endfor %}
+        <div class="total-section">
+            Total: ₹{{ total }}
+        </div>
+
+        <button id="pay-btn">Confirm and Pay</button>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    <div class="terms">
+        <h4>Terms and Conditions</h4>
+        <ul>
+            <li>All orders are final and non-refundable after confirmation.</li>
+            <li>Please review your cart and shipping address before proceeding.</li>
+            <li>Delivery typically takes 3–5 business days based on your location.</li>
+            <li>Items are subject to availability. Substitutions may apply for similar quality products.</li>
+            <li>For any issues, please contact us at <a href="mailto:kisanfarmfreshhub@gmail.com">kisanfarmfreshhub@gmail.com</a>.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Razorpay Script -->
+<!-- Razorpay Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": "{{ razorpay_order.amount }}",
+        "currency": "INR",
+        "name": "Kisan Farm Fresh Hub ",
+        "description": "Payment for your order",
+        "image": "/static/img/logo1.jpg",
+        "order_id": "{{ razorpay_order.id }}",
+        "handler": function (response) {
+            alert("✅ Payment successful!\n\nPayment ID: " + response.razorpay_payment_id);
+            window.location.href = "/payment-success/?payment_id=" + response.razorpay_payment_id;
+        },
+        "prefill": {
+            "name": "{{ user.get_full_name }}",
+            "email": "{{ user.email }}"
+        },
+        "theme": {
+            "color": "#4CAF50"
+        }
+    };
+
+    document.getElementById('pay-btn').onclick = function (e) {
+        var rzp = new Razorpay(options);
+        rzp.open();
+        e.preventDefault();
+    }
+</script>
+
+
+{% endblock %}

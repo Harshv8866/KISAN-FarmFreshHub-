@@ -1,0 +1,1353 @@
+{% extends 'dashboard_base.html' %}
+{% load static%}
+{% block title %}Consumer Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+        /* Include the Animate.css library for animations */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+    /* Overall container styling */
+    .dashboard-container {
+        margin-top: 30px;
+        padding: 20px;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+        background-color: #f1f1f1;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-section h2 {
+        font-size: 32px;
+        color: #2980b9;
+        font-weight: bold;
+    }
+
+    .welcome-section .lead {
+        font-size: 18px;
+        color: #34495e;
+        margin-top: 10px;
+    }
+
+    /* Featured Images Section */
+    .featured-images-section {
+        margin-top: 50px;
+    }
+
+    .featured-images-section h3 {
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    /* Individual Image Cards */
+    .image-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .image-card:hover {
+        transform: scale(1.05);
+    }
+
+    /* Overlay Effect */
+    .image-card .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .image-card:hover .image-overlay {
+        opacity: 1;
+    }
+
+    .image-card h5 {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .image-card p {
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    /* Ensure images fit properly */
+    .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+    }
+
+    /* Products Section */
+    .products-section {
+        margin-top: 50px;
+    }
+
+    .products-section h3 {
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    /* Product Card */
+    .product-card {
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+    }
+
+    .product-card:nth-child(odd) {
+        animation-delay: 0.3s;
+    }
+
+    .product-card:nth-child(even) {
+        animation-delay: 0.6s;
+    }
+
+    /* Order Section */
+    .order-section {
+        margin-top: 50px;
+    }
+
+    .order-section .order-card {
+        padding: 20px;
+        background-color: #ecf0f1;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .order-section .btn-success {
+        margin-top: 10px;
+    }
+
+    /* Profile Section */
+    .profile-section {
+        margin-top: 50px;
+    }
+
+    .profile-section .profile-card {
+        padding: 20px;
+        background-color: #ecf0f1;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Profile Info Styling */
+    .profile-section p {
+        font-size: 16px;
+        color: #34495e;
+        margin: 10px 0;
+    }
+
+    /* Hover effects on buttons */
+    .btn:hover {
+        opacity: 0.8;
+    }
+    .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+        object-position: center center; /* Center the image if needed */
+    }
+
+    .image-card {
+        height: 300px; /* or adjust as needed */
+    }
+
+    .products-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .product-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 250px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+        margin: 10px 0;
+        text-align:center;
+        color:green;
+    }
+    .h3font{
+        color:green;
+        text-decoration: none
+    }
+    a{
+        text-decoration:none;
+    }
+
+    .h3font:hover{
+        color:red;
+    }
+
+    .price {
+        color: #388E3C;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .section-title{
+        color:rgb(0, 35, 2);
+    }
+
+
+
+
+    /* Animations for content */
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInRight {
+        0% {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .welcome-section {
+            padding: 20px;
+        }
+
+        .featured-images-section h3 {
+            font-size: 24px;
+        }
+    }
+
+
+
+    .orders-container {
+        padding: 30px;
+        background-color: #f9f9f9;
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
+
+    .orders-heading {
+        font-size: 26px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #2ecc71;
+        padding-bottom: 10px;
+        color: #2ecc71;
+    }
+
+    .order-box {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .order-header,
+    .order-status-price {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .status.paid {
+        color: #27ae60;
+        font-weight: bold;
+    }
+
+    .status.pending {
+        color: #e67e22;
+        font-weight: bold;
+    }
+
+    .order-items {
+        margin-top: 15px;
+    }
+
+    .item-row {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+    }
+
+    .item-row:first-child {
+        border-top: none;
+    }
+
+    .item-row img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 15px;
+        border: 1px solid #ccc;
+    }
+
+    .item-info p {
+        margin: 3px 0;
+        font-size: 14px;
+    }
+
+    .item-name {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .no-orders {
+        color: #888;
+        font-style: italic;
+        margin-top: 20px;
+    }
+
+    .address-section {
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .address-heading {
+        font-size: 22px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #2ecc71;
+        padding-bottom: 10px;
+        color: #2ecc71;
+    }
+
+    .address-card {
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #fafafa;
+    }
+
+    .address-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .address-row.full {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .address-row p {
+        margin: 0;
+        color: #444;
+    }
+
+    .address-actions {
+        text-align: right;
+        margin-top: 15px;
+    }
+
+    .btn {
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background-color: #2ecc71;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background-color: #27ae60;
+    }
+
+    .btn-add {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-add:hover {
+        background-color: #2980b9;
+    }
+
+    .no-address {
+        color: #777;
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+    .contact-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 16px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+        z-index: 9999;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeInUp 0.5s ease;
+    }
+
+    .contact-icon::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 13px solid transparent;
+        border-top-color: #4caf50;
+        border-bottom: 0;
+        margin-left: -13px;
+        margin-bottom: -13px;
+    }
+
+    .contact-icon:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* Popup success message */
+    .popup {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+        font-weight: bold;
+        animation: fadein 0.5s ease-in-out;
+    }
+    
+    @keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    /* Review Form Styles */
+    form {
+        background-color:rgb(188, 13, 13);
+        color:rgb(0, 0, 0);
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    form label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+    
+    form select,
+    form textarea,
+    form button {
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+    }
+    
+    form textarea {
+        height: 100px;
+        resize: vertical;
+    }
+    
+    form button {
+        background-color: #28a745;
+        color: white;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    
+    form button:hover {
+        background-color: #218838;
+    }
+    
+    /* Star Rating System */
+    .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+    }
+    
+    .star-rating input[type="radio"] {
+        display: none;
+    }
+    
+    .star-rating label {
+        font-size: 30px;
+        color: #444;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    /* Hover effect for stars */
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #ffcc00;
+    }
+    
+    /* Selected star effect */
+    .star-rating input[type="radio"]:checked ~ label {
+        color: #ffcc00;
+    }
+
+
+
+
+
+
+
+
+
+    .why-kisan-container {
+        padding: 40px 20px;
+        background: linear-gradient(to right, rgba(99, 226, 93, 0.8),rgb(124, 64, 64));
+        text-align: center;
+
+        border-radius:10px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+        color:rgb(255, 255, 255) !important; /* dark green */
+        margin-bottom: 30px;
+        /* font-weight: ; */
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .feature-card {
+        background: #e6f5e6;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 100, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 100, 0, 0.15);
+    }
+    
+    .icon {
+        font-size: 36px;
+        margin-bottom: 12px;
+        display: block;
+    }
+    
+    .feature-card h3 {
+        font-size: 20px;
+        color: #1b5e20;
+        margin-bottom: 10px;
+        text-align: center;
+
+    }
+    
+    .feature-card p {
+        font-size: 16px;
+        color: #4e4e4e;
+        text-align: center;
+
+    }
+    
+
+
+
+    h1 {
+        font-family: 'Marker Felt', fantasy; 
+        color: #2d572c; 
+        margin: 20px 0; 
+    }
+
+
+    h3 {
+        color: white; 
+        padding: 15px; 
+        margin: 0 50px; 
+        text-align: left; 
+    }
+
+
+
+
+
+    .products-section {
+        text-align: center;
+        padding: 40px;
+        margin: 20px auto;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #4CAF50, #2E8B57, #81C784);
+        overflow: hidden;
+    }
+
+    .products-section h2 {
+        font-size: 2.5em;
+        color: white;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .products-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .product-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 250px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+        margin: 10px 0;
+        text-align:center;
+        color:green;
+    }
+    .h3font{
+        color:green;
+    }
+
+    .h3font:hover{
+        color:red;
+    }
+
+    .price {
+        color: #388E3C;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .section-title{
+        color:rgb(0, 35, 2);
+    }
+
+    /* About Section */
+    /* Base Styles */
+    .about-section {
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #4CAF50, #2E8B57);
+    border-radius: 10px;
+    }
+
+    .about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+    gap: 20px; /* Space between items */
+    }
+
+    .about-image {
+    flex: 1;
+    max-width: 50%;
+    overflow: hidden;
+    }
+
+    .about-image img {
+    width: 100%;
+    height: auto;
+    max-height: 350px; /* 👈 Limits height */
+    object-fit: cover; /* 👈 Ensures clean crop if needed */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-content {
+    flex: 1;
+    max-width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-content h2 {
+    font-family: 'Georgia', serif;
+    font-size: 32px;
+    color: #2c6e49; /* Green for the title */
+    }
+
+    .pbox {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    }
+
+    .learn-more-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2c6e49; /* Button color */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    }
+
+    .learn-more-btn:hover {
+    background-color: #1a4e34; /* Darker green on hover */
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+    .about-container {
+        flex-direction: column; /* Stack the image and content vertically on small screens */
+        text-align: center;
+    }
+
+    .about-image {
+        max-width: 100%; /* Image takes full width */
+    }
+
+    .about-content {
+        max-width: 100%; /* Content takes full width */
+    }
+
+    .about-content h2 {
+        font-size: 28px; /* Adjust title size on smaller screens */
+    }
+
+    .pbox {
+        font-size: 16px; /* Adjust text size on smaller screens */
+    }
+
+    .learn-more-btn {
+        padding: 12px 25px;
+    }
+    }
+
+    @media (max-width: 480px) {
+    .about-content h2 {
+        font-size: 24px; /* Adjust title size for very small screens */
+    }
+
+    .pbox {
+        font-size: 14px; /* Further reduce text size */
+    }
+
+    .learn-more-btn {
+        padding: 10px 20px;
+    }
+    }
+
+    /* Reviews Section */
+    .reviews-section {
+        background: linear-gradient(135deg, #4CAF50, #2E8B57);
+        padding: 40px;
+        text-align: center;
+        border-radius: 15px;
+        margin: 20px auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .reviews-section h2 {
+        font-size: 30px;
+        color: white;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .reviews-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .review {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        width: 320px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .review:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .review img {
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 3px solid #4CAF50;
+    }
+
+    .review p {
+        font-size: 16px;
+        color: #444;
+        font-style: italic;
+    }
+
+    .stars {
+        font-size: 22px;
+        color: #FFD700;
+        margin: 12px 0;
+    }
+    
+
+
+
+</style>
+<div class="container dashboard-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section animate__animated animate__fadeInUp">
+        <h2>Welcome, {{ user.first_name }}!</h2>
+        <p class="lead">Explore a variety of fresh products and manage your orders with ease.</p>
+    </div>
+
+    <!-- Featured Images Section -->
+    <div class="featured-images-section animate__animated animate__fadeInUp">
+        <h3 class="text-center" >Featured Products</h3>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="image-card animate__animated animate__fadeInLeft">
+                    <img src="/static/img/brokoli.jpg" class="img-fluid" alt="Featured Vegetable" />
+                    <div class="image-overlay">
+                        <h5>Fresh Brokoli</h5>
+                        <p>Pick the freshest veggies for your healthy meals.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="image-card animate__animated animate__fadeInUp">
+                    <img src="/static/img/grapes.jpg" class="img-fluid" alt="Featured Fruit" />
+                    <div class="image-overlay">
+                        <h5>Fresh Grapes</h5>
+                        <p>Juicy, sweet, and packed with vitamins!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="image-card animate__animated animate__fadeInRight">
+                    <img src="/static/img/Orange.jpg" class="img-fluid" alt="Fresh Juice" />
+                    <div class="image-overlay">
+                        <h5>Fresh Oranges</h5>
+                        <p>Refreshing and healthy Fruit to start your day.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="image-card animate__animated animate__fadeInLeft">
+                    <img src="/static/img/tometo.jpg" class="img-fluid" alt="Fresh Tomato" />
+                    <div class="image-overlay">
+                        <h5>Fresh Tomato</h5>
+                        <p>Fresh, red, juicy tomatoes perfect for salads and sauces.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="image-card animate__animated animate__fadeInUp">
+                    <img src="/static/img/strawberry.jpg" class="img-fluid" alt="Organic Carrot" />
+                    <div class="image-overlay">
+                        <h5>Strawberry</h5>
+                        <p>Sweet and tangy, packed with antioxidants.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="image-card animate__animated animate__fadeInRight">
+                    <img src="/static/img/dodo.jpg" class="img-fluid" alt="Green Bell Pepper" />
+                    <div class="image-overlay">
+                        <h5>Sweet Cornr</h5>
+                        <p>Sweet and fresh Corn for making popcorn.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="orders-container">
+        <h2 class="orders-heading">🧾 Your Orders</h2>
+    
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-box">
+                    <div class="order-header">
+                        <span><strong>Order ID:</strong> #{{ order.id }}</span>
+                        <span><strong>Date:</strong> {{ order.created_at|date:"d M Y, h:i A" }}</span>
+                    </div>
+                    <div class="order-status-price">
+                        <span><strong>Status:</strong> 
+                            <span class="status {% if order.is_paid %}paid{% else %}pending{% endif %}">
+                                {% if order.is_paid %}Paid{% else %}Pending{% endif %}
+                            </span>
+                        </span>
+                        <span><strong>Total:</strong> ₹{{ order.amount }}</span>
+                    </div>
+    
+                    <!-- 👇 Track Order Button -->
+                    <div class="track-order-btn">
+                        <a href="{% url 'track_order' order.id %}" class="btn btn-sm btn-outline-success">Track Order</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-orders">You haven't placed any orders yet.</p>
+        {% endif %}
+    </div>
+    
+    
+<br>
+
+    <div class="products-grid  ">
+        {% for product in products %}
+        <div class="product-card-wrapper">
+            <a href="{% url 'product_detail' product.id %}" class="product-card-link">
+                <div class="product-card">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <h3 class="h3font text-center">{{ product.name }}</h3>
+                    <p class="price text-center">₹{{ product.price }}/kg</p>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p>No products available right now.</p>
+        {% endfor %}
+    </div>
+<br>
+
+<div class="why-kisan-container">
+    <h1 class="section-title text-center ">Why Choose Kisan Market?</h1>
+    <div class="features-grid">
+      <!-- First row of 4 boxes -->
+      <div class="feature-card">
+        <span class="icon text-center">🌾</span>
+        <h3>Direct From Farmers</h3>
+        <p>Fresh produce straight from trusted local farmers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon text-center">📦</span>
+        <h3>Quality You Can Trust</h3>
+        <p>Verified and traceable agricultural products.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon text-center">💰</span>
+        <h3>Fair Pricing</h3>
+        <p>Transparent and equitable pricing for both farmers and consumers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon text-center">🌱</span>
+        <h3>Sustainable & Organic</h3>
+        <p>Supporting eco-friendly farming techniques.</p>
+      </div>
+  
+      <!-- Second row of 3 boxes -->
+      <div class="feature-card">
+        <span class="icon text-center">💡</span>
+        <h3>Innovative Solutions</h3>
+        <p>Leveraging technology to streamline the market process.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon  text-center">📈</span>
+        <h3>Market Expansion</h3>
+        <p>Expanding farmers' reach to more consumers through digital platforms.</p>
+      </div>
+  
+      
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+
+
+
+<!-- Login Popup Modal -->
+<div id="loginPopup" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeLoginPopup()">&times;</span>
+        <h2>Login to Continue</h2>
+        <form id="loginForm" method="POST" action="{% url 'consumer_login' %}">
+            {% csrf_token %}
+            <input type="hidden" id="redirect_url" name="next" value="">
+            <label for="username">Username:</label>
+            <input  type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input  type="password" id="password" name="password" required>
+            <button class="buttonss"type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+
+
+<br>
+
+
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-image">
+            <img src="{% static 'img/Indian-Farmer.jpg' %}" alt="Farmers in Field">
+        </div>
+        <div class="about-content">
+            <h2><b>🌱 About Kisan Market</b></h2>
+            <p class="pbox">
+                <strong>Kisan Market</strong> is a platform dedicated to empowering farmers and delivering fresh,
+                high-quality agricultural products directly to consumers. We believe in fair trade, sustainability,
+                and creating a system that benefits both farmers and buyers.
+            </p>
+            <p class="pbox">
+                By eliminating unnecessary middlemen, we ensure <b>farmers</b> receive fair <b>prices</b> and <b>customers</b> get
+                farm-fresh products at the best <b>rates</b>.
+            </p>
+            <a href="aboutus" class="learn-more-btn">Learn More</a>
+        </div>
+    </div>
+</section>
+
+
+<section class="reviews-section">
+    <h2>🌟 What Our Consumers Say</h2>
+    <div class="reviews-container">
+        <div class="review">
+            <img src="{% static 'img/consumer1.jpg' %}" alt="User 1">
+            <p>"Kisan Market has changed the way I buy fresh products. The quality is amazing, and I love supporting local farmers!"</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <h4>- Anjali Sharma</h4>
+        </div>
+        <div class="review">
+            <img src="{% static 'img/consumer2.jpg' %}" alt="User 2">
+            <p>"Fresh vegetables at my doorstep at fair prices. Highly recommend Kisan Market for all fresh product needs!"</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <h4>- Rahul Verma</h4>
+        </div>
+        <div class="review">
+            <img src="{% static 'img/consumer3.jpg' %}" alt="User 3">
+            <p>"I love how easy it is to order directly from farmers. The quality is top-notch, and the prices are reasonable!"</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <h4>- Priya Sinha</h4>
+        </div>
+    </div>
+</section>
+<style>
+/* Custom styling to ensure side-by-side layout */
+.address-review-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.address-box,
+.review-box {
+    flex: 1 1 45%;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive stacking on small screens */
+@media (max-width: 768px) {
+    .address-box,
+    .review-box {
+        flex: 1 1 100%;
+    }
+}
+
+.review-box form {
+    background-color:rgb(246, 246, 246);
+    color:rgb(0, 0, 0);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.review-box label {
+    font-weight: bold;
+}
+.review-box h3{
+    color: #2ecc71;
+}
+
+.review-box select,
+.review-box textarea,
+.review-box button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+.review-box textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.review-box button {
+    background-color: #28a745;
+    color: white;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.review-box button:hover {
+    background-color: #218838;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    text-align:left;
+    font-size: 40px;
+    color: #444;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffcc00;
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+}
+</style>
+
+<div class="container dashboard-container">
+
+
+    <!-- Address & Review Side-by-Side -->
+    <div class="address-review-wrapper">
+        <!-- Address Box -->
+        <div class="address-box">
+            <h3 class="address-heading">Your Shipping Address</h3>
+            {% if address %}
+                <div class="address-card">
+                    <div class="address-row"><p><strong>Street:</strong> {{ address.full_name }}</p></div>
+                    <div class="address-row"><p><strong>City:</strong> {{ address.city }}</p></div>
+                    <div class="address-row"><p><strong>Country:</strong> {{ address.country }}</p></div>
+                    <div class="address-row"><p><strong>Email:</strong> {{ address.email }}</p></div>
+                    <div class="address-row"><p><strong>Address:</strong> {{ address.address }}</p></div>
+                    <div class="address-row"><p><strong>Zip code:</strong> {{ address.postal_code }}</p></div>
+                    <div class="address-actions">
+                        <a href="" class="btn btn-edit">Edit Address</a>
+                    </div>
+                </div>
+            {% else %}
+                <p class="no-address">No shipping address found.</p>
+                <a href="" class="btn btn-add">Add Address</a>
+            {% endif %}
+        </div>
+
+        <!-- Review Box -->
+        <div class="review-box">
+            <h3 style="color: #2ecc71;">Leave a Review</h3>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="popup">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <form method="POST" action="{% url 'consumer_dashboard' %}">
+                {% csrf_token %}
+                
+                <label for="product">Product (optional)</label>
+                <select name="product" id="product">
+                    <option value="">-- Overall Website Experience --</option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            
+                <label for="rating">Rating</label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                </div>
+            
+                <label for="comment">Comment</label>
+                <textarea name="comment" id="comment" required placeholder="Write your review here..."></textarea>
+            
+                <button type="submit" name="submit_review">Submit Review</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+    
+    
+    <a href="{% url 'help' %}" class="contact-icon" title="Need Help?">
+        💬 Help
+    </a>
+
+    
+    
+    
+    <script>
+        function handleProductClick(productId) {
+            window.location.href = `/product/${productId}/`;
+        }
+
+            document.addEventListener("DOMContentLoaded", function () {
+              const form = document.getElementById("review-form");
+              const popup = document.getElementById("review-popup");
+          
+              form.addEventListener("submit", function (e) {
+                e.preventDefault(); // prevent normal form submission for demo
+          
+                // Simulate successful submission
+                popup.style.display = "block";
+          
+                // Optionally clear form fields
+                form.reset();
+          
+                // Hide the popup after a few seconds
+                setTimeout(() => {
+                  popup.style.display = "none";
+                }, 3000);
+          
+                // In real use, you’d send the form data using fetch or AJAX:
+                /*
+                fetch(form.action, {
+                  method: "POST",
+                  body: new FormData(form),
+                  headers: {
+                    "X-CSRFToken": form.querySelector('[name="csrfmiddlewaretoken"]').value
+                  }
+                })
+                .then(response => response.json())
+                .then(data => {
+                  popup.style.display = "block";
+                  setTimeout(() => popup.style.display = "none", 3000);
+                  form.reset();
+                })
+                .catch(error => console.error('Error:', error));
+                */
+              });
+            });
+          
+        
+</script>
+{% endblock %}

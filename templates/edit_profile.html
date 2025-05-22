@@ -1,0 +1,175 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+<style>
+    /* Container for profile edit form */
+    body{
+       background-color: #018e2018;
+    }
+    .profile-edit-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 30px;
+        background: linear-gradient(135deg,rgba(136, 243, 124, 0.64), #e1e8ed);
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 30px;
+        color: #2c3e50;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Form styling */
+    .profile-edit-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .form-group label {
+        font-size: 18px;
+        font-weight: 600;
+        color:rgb(0, 0, 0);
+        margin-bottom: 10px;
+        transition: color 0.3s;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="file"] {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        border: 1px solid #bdc3c7;
+        border-radius: 8px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        background-color: #ffffff;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group input[type="file"]:focus {
+        border-color:#018e20;
+        box-shadow: 0 0 5px rgba(54, 244, 73, 0.5);
+        outline: none;
+    }
+
+    /* Checkbox styling */
+    .form-group input[type="checkbox"] {
+        margin-top: 8px;
+    }
+
+    /* Submit button styling */
+    .form-submit {
+        display: flex;
+        justify-content: center;
+    }
+
+    button {
+        background-color: #018e20;
+        color: white;
+        padding: 14px 32px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    button:hover {
+        background-color: #018e20;
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    button:active {
+        transform: scale(1);
+    }
+
+    /* Profile Picture Section */
+    .form-group input[type="file"] {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+
+    .form-group img {
+        display: block;
+        margin-top: 15px;
+        max-width: 100px;
+        border-radius: 50%;
+        border: 2px solid #bdc3c7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .profile-edit-container {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 28px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+    }
+</style>
+
+<div class="profile-edit-container">
+    <h2>Edit Profile</h2>
+    <form method="POST" enctype="multipart/form-data" class="profile-edit-form">
+        {% csrf_token %}
+        
+        <!-- Profile Picture Section -->
+        <div class="form-group">
+            <label for="profile_picture">Profile Picture:</label>
+            {{ form.profile_picture }}
+        </div>
+
+        <!-- Remove Profile Picture Checkbox -->
+        <div class="form-group">
+            <label for="remove_picture">Remove Profile Picture:</label>
+            {{ form.remove_picture }}
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            {{ form.first_name }}
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            {{ form.last_name }}
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">Email:</label>
+            {{ form.email }}
+        </div>
+
+        <!-- Save Changes Button -->
+        <div class="form-submit">
+            <button type="submit">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Learn More | Kisan Market{% endblock title %}
+
+{% block body %}
+<style>
+    body {
+        /*  background-color: #0d3311;Dark green theme */
+        color: #f0f0f0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .learn-more {
+        width: 85%;
+        margin: 40px auto;
+        padding: 40px;
+        background-color: #154d1e;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .learn-more h1, .learn-more h2 {
+        color: #8fff7f;
+        margin-bottom: 15px;
+    }
+
+    .learn-more p, .learn-more li {
+        font-size: 17px;
+        line-height: 1.6;
+    }
+
+    .learn-more ul {
+        padding-left: 20px;
+    }
+
+    /* Farmers Talk Section */
+    .farmers-talk {
+        margin-top: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        background-color: #1d5929;
+        padding: 30px;
+        border-radius: 10px;
+    }
+
+    .farmer-img {
+        flex: 1;
+        min-width: 250px;
+        text-align: center;
+    }
+
+    .farmer-img img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 100px;
+        border: 4px solid rgb(255, 255, 255);
+    }
+
+    .farmer-quote {
+        flex: 2;
+        padding: 20px;
+    }
+
+    .farmer-quote h3 {
+        color: #b7f8b7;
+        margin-bottom: 10px;
+    }
+
+    .farmer-quote p {
+        font-style: italic;
+        font-size: 18px;
+        line-height: 1.6;
+        color: #f0f0f0;
+    }
+
+    @media (max-width: 768px) {
+        .farmers-talk {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .farmer-quote {
+            padding-top: 20px;
+        }
+    }
+</style>
+
+<section class="learn-more">
+    <h1>About Kisan Market</h1>
+    <p>Kisan Market is dedicated to empowering farmers and providing consumers with fresh, high-quality products.</p>
+
+    <h2>Our Mission & Vision</h2>
+    <p><strong>Mission:</strong> To connect farmers and consumers through a fair and transparent marketplace.</p>
+    <p><strong>Vision:</strong> A sustainable and prosperous future for the agricultural community.</p>
+
+    <h2>How It Works</h2>
+    <ul>
+        <li>👨‍🌾 Farmers list their products.</li>
+        <li>🛒 Consumers browse and purchase.</li>
+        <li>💰 Farmers get direct payments.</li>
+        <li>🍎 Consumers receive farm-fresh produce.</li>
+    </ul>
+
+    <h2>Why Choose Us?</h2>
+    <p>✅ Fair Pricing | ✅ Fresh Produce | ✅ Sustainability | ✅ Transparency</p>
+
+    <h2>Contact Us</h2>
+    <p>📧 Email: support@kisanmarket.com | 📞 Phone: +91 9408831680</p>
+
+    <!-- Farmers Talk Section -->
+    <div class="farmers-talk">
+        <div class="farmer-img">
+            <img src="{% static 'img/farmer.jpg' %}" alt="Farmer testimonial image">
+        </div>
+        <div class="farmer-quote">
+            <h3>🚜 Farmer Ramesh (Maharashtra)</h3>
+            <p>
+                "Thanks to Kisan Market, I now earn more by selling directly to customers without middlemen. My crops
+                reach people faster and fresher. This platform has truly changed the way I farm and sell!"
+            </p>
+        </div>
+    </div>
+    <!-- Consumer Talk Section -->
+<div class="farmers-talk">
+    <div class="farmer-img">
+        <img src="{% static 'img/consumer.jpg' %}" alt="Consumer testimonial image">
+    </div>
+    <div class="farmer-quote">
+        <h3>🛍️ Priya Sharma (Delhi)</h3>
+        <p>
+            "I love Kisan Market! The vegetables are super fresh, and I feel great knowing I’m supporting local farmers directly.
+            It’s easy to order, delivery is quick, and everything feels organic and trustworthy."
+        </p>
+    </div>
+</div>
+
+</section>
+{% endblock body %}

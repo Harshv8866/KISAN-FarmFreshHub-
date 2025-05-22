@@ -1,0 +1,66 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Payment Successful{% endblock %}
+
+{% block content %}
+<style>
+    body{
+        background-color:white !important;
+    }
+    .payment-success-container {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 40px;
+        background: linear-gradient(to right, #4CAF50, #81C784);
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        color: #fff;
+        text-align: center;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .payment-success-container h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .payment-success-container p {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+
+    .payment-success-container strong {
+        font-weight: 600;
+    }
+
+    .payment-success-container a {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 14px 28px;
+        background-color: #ffffff;
+        color: #4CAF50;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .payment-success-container a:hover {
+        background-color: #388E3C;
+        color: #fff;
+    }
+</style>
+
+<div class="payment-success-container">
+    <h1>✅ Payment Successful!</h1>
+    <p>Thank you for your purchase, <strong>{{ order.user.first_name }}</strong>!</p>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Payment ID:</strong> {{ order.payment_id }}</p>
+    <!-- order_detail.html -->
+
+    <p>We’ve received your payment and are preparing your order.</p>
+
+    <a href="{% url 'consumer_dashboard' %}">Go to Homepage</a>
+</div>
+{% endblock %}

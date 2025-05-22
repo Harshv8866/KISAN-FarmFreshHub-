@@ -1,0 +1,181 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    <style>
+        body{
+            background-color: #018e2018 !important;
+        }
+        .checkout-container {
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(136, 243, 124, 0.64), #e1e8ed);            max-width: 900px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: green;
+            font-weight:bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .address-section, .no-address-section {
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .address-form {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color:rgb(36, 146, 55);
+            box-shadow:1px 1px 5px black inset;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color:rgb(6, 70, 21);
+        }
+
+        .btn-secondary {
+            background-color: #f4f4f4;
+            color: #333;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            width: auto;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ddd;
+        }
+    </style>
+
+    <div class="checkout-container">
+        <h2 style="color:green">Checkout Page</h2>
+
+        {% if shipping_address %}
+            <div class="address-section">
+                <h3>Shipping Address:</h3>
+                <p>{{ shipping_address.full_name }}<br>
+                   {{ shipping_address.address }}<br>
+                   {{ shipping_address.city }}, {{ shipping_address.country }}<br>
+                   {{ shipping_address.postal_code }}<br>
+                   {{ shipping_address.phone }}<br>
+                   {{ shipping_address.email }}</p>
+    
+                <!-- Button to Update Address -->
+                <a href="?update=true" class="btn-secondary">Update Address</a>
+            </div>
+        {% else %}
+            <div class="no-address-section">
+                <h3>No Shipping Address Added</h3>
+                <!-- Button to Add New Address -->
+                <a href="?update=true" class="btn-secondary">Add New Address</a>
+            </div>
+        {% endif %}
+
+        <!-- Address Form for Adding or Updating Address -->
+        {% if is_update %}
+            <div class="address-form">
+                <h3>
+                    {% if shipping_address %}
+                        Update Address
+                    {% else %}
+                        Add New Address
+                    {% endif %}
+                </h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.full_name.label_tag }} {{ form.full_name }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email.label_tag }} {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.phone.label_tag }} {{ form.phone }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.country.label_tag }} {{ form.country }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.city.label_tag }} {{ form.city }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.address.label_tag }} {{ form.address }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.postal_code.label_tag }} {{ form.postal_code }}
+                    </div>
+
+                    <button type="submit" class="save-address-btn">
+                        {% if shipping_address %}
+                            Update Address
+                        {% else %}
+                            Save Address
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'payment_page' %}">
+            {% csrf_token %}
+            <button type="submit" class="process-payment-btn">Proceed to Payment</button>
+        </form>
+        
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<style>
+    /* Remove underline from all links */
+    a {
+        text-decoration: none !important; /* Force removal of underline */
+    }
+
+    /* Add styles for category buttons */
+    .category-btn {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        border-radius: 5px;
+        text-transform: capitalize;
+        text-decoration: none; /* Remove underline */
+        text-align: center; /* Center align text */
+        transition: all 0.3s ease; /* Smooth transition */
+    }
+
+    /* Hover effect for category buttons */
+    .category-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-5px) scale(1.1); /* 3D effect: move up and scale */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    }
+
+    .category-btn.active {
+        background-color: #e67e22;
+    }
+
+    .category-btn img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    /* Card layout for products */
+    .product-card-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        cursor: pointer; /* Make the card clickable */
+        position: relative; /* For positioning the discount badge */
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+        text-decoration: none; /* Ensure there's no underline */
+    }
+
+    .card-text {
+        font-size: 14px;
+        color: #7f8c8d;
+        text-decoration: none; /* Ensure there's no underline */
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    /* Right-Side Floating Discount Badge */
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff6347; /* Tomato color */
+        color: white;
+        padding: 8px 12px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        z-index: 10;
+        transform: rotate(10deg); /* Tilt the badge slightly for a unique look */
+    }
+
+    .btn-primary {
+        background-color: #2980b9;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #3498db;
+    }
+
+    /* Product card hover effect */
+    .product-card-container:hover {
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="container">
+    <h2 class="mb-4 text-center">Available Products</h2>
+
+    <!-- Category filter buttons -->
+    <div class="text-center mb-4">
+        <a href="?category=vegetables" class="category-btn {% if category_filter == 'vegetables' %}active{% endif %}">
+            <img src="/static/category_images/vegetables.jpg" alt="Vegetables">
+            Vegetables
+        </a>
+        <a href="?category=fruits" class="category-btn {% if category_filter == 'fruits' %}active{% endif %}">
+            <img src="/static/category_images/fruit.jpg" alt="Fruits">
+            Fruits
+        </a>
+        <a href="?category=seeds" class="category-btn {% if category_filter == 'seeds' %}active{% endif %}">
+            <img src="/static/category_images/seed.jpg" alt="Seeds">
+            Seeds
+        </a>
+        <a href="?category=fertilizer" class="category-btn {% if category_filter == 'fertilizer' %}active{% endif %}">
+            <img src="/static/category_images/fertilizer.jpg" alt="Fertilizer">
+            Fertilizer
+        </a>
+    </div>
+
+    {% if category_filter %}
+        <h3 class="text-center mb-4">Showing "{{ category_filter|title }}" Products</h3>
+    {% else %}
+        <h3 class="text-center mb-4">Showing All Products</h3>
+    {% endif %}
+
+    <!-- Product Cards -->
+    <div class="row">
+        {% for product in filtered_products %}
+            <div class="col-md-3 mb-4">
+                <a href="{% url 'product_detail' product.id %}">
+                    <div class="card shadow-sm product-card-container text-center">
+                        <!-- Right-Side Floating Discount Badge -->
+                        <div class="discount-badge">Save 10%!</div>
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                            <p><strong>Price:</strong> ₹{{ product.price }} per Kg</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <p>No products available in this category.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

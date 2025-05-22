@@ -1,0 +1,75 @@
+<!-- invoice_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice for Order #{{ order.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .invoice-header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .order-details td {
+            padding: 5px;
+        }
+        .total {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="invoice-header">
+    <h1>Invoice</h1>
+    <p>Order #{{ order.id }}</p>
+</div>
+
+<div class="order-details">
+    <table>
+        <tr>
+            <td>Customer Name:</td>
+            <td>{{ order.customer_name }}</td>
+        </tr>
+        <tr>
+            <td>Shipping Address:</td>
+            <td>{{ order.shipping_address }}</td>
+        </tr>
+        <tr>
+            <td>Order Date:</td>
+            <td>{{ order.order_date }}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>${{ item.product.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.product.price * item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="total">
+    <p>Total Amount: ${{ order.total_price }}</p>
+</div>
+
+</body>
+</html>

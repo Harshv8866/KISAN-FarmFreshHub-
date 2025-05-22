@@ -1,0 +1,920 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Home {% endblock title %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+     #General style
+    body {
+        font-family: Arial, sans-serif;
+        background-color:rgb(255, 255, 255); /* Light background for contrast */
+    }
+
+    .divcontainer {
+        position: relative;
+        margin-top:3px;
+        width: 100%;
+        height: 26.042vw; /* Fixed height */
+        overflow: hidden; /* Hide overflow */
+    }
+
+    .divcontainer img {
+        width: 100%;
+        height: 100%;
+        object-fit:cover;
+        opacity: 0.9; /* Adjusted value */
+    }
+
+    .text-overlay {
+        position: absolute;
+        top: 20%; /* Adjust as necessary for visual balance */
+        left: 400px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 2.5vw;
+        font-weight: bold;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow for visibility */
+        text-align: center; /* Added center alignment */
+        z-index: 2; /* Ensure it's above other elements */
+    }
+
+    .text-container {
+        position: absolute;
+        top: 50%; /* Positioned lower to give space */
+        left: 450px;
+        transform: translate(-50%, -50%);
+        font-size: 2vw;
+        color: #fff;
+        text-align: center;
+        z-index: 2; /* Ensure it's above other elements */
+    }
+
+    .cointainer2 {
+        width: 35vw;
+        height: 22.5vw; 
+        position: absolute;
+        top: 5%; 
+        right: 5%; 
+        border-radius: 15px;
+        overflow: hidden; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+        z-index: 2; /* Ensure visibility */
+    }
+    
+    .rounded-different {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+    
+    .rounded-different.fade {
+        opacity: 1;
+    }
+
+    .rounded-different {
+        border-radius: 15px; 
+        max-width: 100%; 
+        height: auto; 
+    }
+
+    .button {
+        background: linear-gradient(to right, rgba(32, 245, 20, 1) ,rgb(132, 38, 38) 70%);
+        color: white;
+    
+        border: none;
+        border-radius: 5px;
+        padding: 10px 10vw; 
+        font-weight:bold;
+        font-size: 1em; 
+        cursor: pointer; 
+        transition: background-color 0.3s; 
+        position: absolute; /* Use absolute for placement */
+        bottom: 40px; /* Adjust based on the design */
+        left: 30%; /* Center horizontally */
+        transform: translateX(-50%); /* Offsetting to center */
+        z-index: 3; /* Above the background */
+        box-shadow:2px 2px 5px black ;
+    }
+
+    .button:hover {
+        background-color: #45a049; 
+    }
+
+
+.mission-container {
+  background: linear-gradient(to right, rgba(99, 226, 93, 0.8),rgb(124, 64, 64)), 
+              url('https://via.placeholder.com/1500x800');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+      
+      .mission-title {
+        font-family: 'Georgia', serif;
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #fff;
+        
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      
+      .mission-description {
+        font-family: 'Times New Roman', serif;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.4); /* Slight dark overlay for better text visibility */
+        border-radius: 10px;
+      }
+      
+    .why-kisan-container {
+        padding: 40px 20px;
+          background: linear-gradient(to right, rgba(99, 226, 93, 0.8),rgb(124, 64, 64));
+        text-align: center;
+
+        border-radius:10px;
+      }
+      
+      .section-title {
+        font-size: 32px;
+        color:rgb(255, 255, 255) !important; /* dark green */
+        margin-bottom: 30px;
+        /* font-weight: ; */
+      }
+      
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      
+      .feature-card {
+        background: #e6f5e6;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 100, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 100, 0, 0.15);
+      }
+      
+      .icon {
+        font-size: 36px;
+        margin-bottom: 12px;
+        display: block;
+      }
+      
+      .feature-card h3 {
+        font-size: 20px;
+        color: #1b5e20;
+        margin-bottom: 10px;
+        text-align: center;
+
+      }
+      
+      .feature-card p {
+        font-size: 16px;
+        color: #4e4e4e;
+        text-align: center;
+
+      }
+      
+    
+
+
+    h1 {
+        font-family: 'Marker Felt', fantasy; 
+        color: #2d572c; 
+        margin: 20px 0; 
+    }
+
+
+    h3 {
+        color: white; 
+        padding: 15px; 
+        margin: 0 50px; 
+        text-align: left; 
+    }
+
+
+
+    /* Products Section */
+    .products-section {
+        text-align: center;
+        padding: 40px;
+        margin: 20px auto;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #4CAF50, #2E8B57, #81C784);
+        overflow: hidden;
+    }
+
+    .products-section h2 {
+        font-size: 2.5em;
+        color: white;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .products-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .product-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 250px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+        margin: 10px 0;
+        text-align:center;
+        color:green;
+    }
+    .h3font{
+        color:green;
+    }
+
+    .h3font:hover{
+        color:red;
+    }
+
+    .price {
+        color: #388E3C;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .section-title{
+        color:rgb(0, 35, 2);
+    }
+
+    /* About Section */
+/* Base Styles */
+.about-section {
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #4CAF50, #2E8B57);
+    border-radius: 10px;
+}
+
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow content to wrap on smaller screens */
+    gap: 20px; /* Space between items */
+}
+
+.about-image {
+    flex: 1;
+    max-width: 50%;
+    overflow: hidden;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    max-height: 350px; /* 👈 Limits height */
+    object-fit: cover; /* 👈 Ensures clean crop if needed */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-content {
+    flex: 1;
+    max-width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-content h2 {
+    font-family: 'Georgia', serif;
+    font-size: 32px;
+    color: #2c6e49; /* Green for the title */
+}
+
+.pbox {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.learn-more-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2c6e49; /* Button color */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.learn-more-btn:hover {
+    background-color: #1a4e34; /* Darker green on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column; /* Stack the image and content vertically on small screens */
+        text-align: center;
+    }
+
+    .about-image {
+        max-width: 100%; /* Image takes full width */
+    }
+
+    .about-content {
+        max-width: 100%; /* Content takes full width */
+    }
+
+    .about-content h2 {
+        font-size: 28px; /* Adjust title size on smaller screens */
+    }
+
+    .pbox {
+        font-size: 16px; /* Adjust text size on smaller screens */
+    }
+
+    .learn-more-btn {
+        padding: 12px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-content h2 {
+        font-size: 24px; /* Adjust title size for very small screens */
+    }
+
+    .pbox {
+        font-size: 14px; /* Further reduce text size */
+    }
+
+    .learn-more-btn {
+        padding: 10px 20px;
+    }
+}
+
+    /* Reviews Section */
+    .reviews-section {
+        background: linear-gradient(135deg, #4CAF50, #2E8B57);
+        padding: 40px;
+        text-align: center;
+        border-radius: 15px;
+        margin: 20px auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .reviews-section h2 {
+        font-size: 30px;
+        color: white;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .reviews-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .review {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        width: 320px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .review:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .review img {
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 3px solid #4CAF50;
+    }
+
+    .review p {
+        font-size: 16px;
+        color: #444;
+        font-style: italic;
+    }
+
+    .stars {
+        font-size: 22px;
+        color: #FFD700;
+        margin: 12px 0;
+    }
+
+    /* Footer */
+    footer {
+        background: #2d572c; 
+        color: white;
+        padding: 30px 0;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin: 10px;
+    }
+
+    .footer-section h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid white;
+        display: inline-block;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin: 8px 0;
+    }
+
+    .footer-section ul li a {
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding: 15px;
+        background: #1d3b1d; 
+    }
+    .footer-section-social a{
+        color:white;
+        padding: 8px;
+        font-size:px;
+        
+        
+    }
+    @media only screen and (max-width:431px ) and (min-width:10px){
+        .divcontainer {
+            position: relative;
+            width: 100%;
+            height: 26.042vw; /* Fixed height */
+            overflow: hidden; /* Hide overflow */
+        }
+    
+        .divcontainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1; /* Adjusted value */
+        }
+    
+        .text-overlay {
+            position: absolute;
+            top: 15%; /* Adjust as necessary for visual balance */
+            left: 108px;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2.5vw;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow for visibility */
+            text-align: center; /* Added center alignment */
+            z-index: 2; /* Ensure it's above other elements */
+        }
+    
+        .text-container {
+            position: absolute;
+            top: 25%; /* Positioned lower to give space */
+            left: 100px;
+            transform: translate(-50%, -50%);
+            font-size: 2vw;
+            color: #fff;
+            text-align: center;
+            z-index: 2; /* Ensure it's above other elements */
+        }
+        .cointainer2 {
+            width: 33vw;
+            height: 22.5vw; 
+            position: absolute;
+            top: 6%; 
+            right: 2.5%; 
+            border-radius: 7.5px;
+            overflow: hidden; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+            z-index: 2; /* Ensure visibility */
+        }
+        .button {
+            background-color: #4CAF50; 
+            color: white;
+            border: none;
+            border-radius: 2.5px;
+            padding: 5px 5vw; 
+            font-size: 0.5em; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            position: absolute; /* Use absolute for placement */
+            bottom: 20px; /* Adjust based on the design */
+            left: 28%; /* Center horizontally */
+            transform: translateX(-50%); /* Offsetting to center */
+            z-index: 3; /* Above the background */
+        }
+    
+        .button:hover {
+            background-color: #45a049; 
+        }
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+    
+    .modal-content {
+        background: #fff;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 16px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .buttonss{
+        width: 95%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #388e3c;
+    }
+    a.product-card-link {
+        text-decoration: none;   /* Removes underline */
+        color: inherit;          /* Inherits color from parent (no blue) */
+    }
+    
+    
+    
+</style>
+
+<!-- The main hero section -->
+<div class="divcontainer">
+    <img src="{% static 'img/background.jpg' %}" alt="Background Image"> 
+    <div class="text-overlay">Welcome to Kisan Market – Empowering <br>Farmers, Connecting Consumers! 🌱🚜</div>
+    <div class="text-container">
+        <span id="animated-text"></span>
+    </div>
+    <div class="cointainer2">
+        <img class="rounded-different fade" src="{% static 'img/image6.jpg' %}" alt="Some Image" id="image">
+    </div>
+    <div class="cointainer3">
+        <a href="signup">
+            <button class="button">Join Now</button>
+        </a>
+    </div>
+</div>
+<br>
+<div class="mission-container">
+    <h1 class="mission-title text-center">Our Mission</h1>
+    <p class="mission-description">
+      At Kisan Market, we believe in fair trade, sustainability, and transparency. Our platform bridges the gap between farmers and consumers, ensuring that fresh, high-quality agricultural products reach your home while supporting hardworking farmers with fair pricing and reduced intermediaries.
+    </p>
+  </div>
+  <br>
+
+<div class="why-kisan-container">
+    <h1 class="section-title text-center ">Why Choose Kisan Market?</h1>
+    <div class="features-grid">
+      <!-- First row of 4 boxes -->
+      <div class="feature-card">
+        <span class="icon text-center">🌾</span>
+        <h3>Direct From Farmers</h3>
+        <p>Fresh produce straight from trusted local farmers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon text-center">📦</span>
+        <h3>Quality You Can Trust</h3>
+        <p>Verified and traceable agricultural products.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon text-center">💰</span>
+        <h3>Fair Pricing</h3>
+        <p>Transparent and equitable pricing for both farmers and consumers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon text-center">🌱</span>
+        <h3>Sustainable & Organic</h3>
+        <p>Supporting eco-friendly farming techniques.</p>
+      </div>
+  
+      <!-- Second row of 3 boxes -->
+      <div class="feature-card">
+        <span class="icon text-center">💡</span>
+        <h3>Innovative Solutions</h3>
+        <p>Leveraging technology to streamline the market process.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon  text-center">📈</span>
+        <h3>Market Expansion</h3>
+        <p>Expanding farmers' reach to more consumers through digital platforms.</p>
+      </div>
+  
+      
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+
+
+
+<!-- Login Popup Modal -->
+<div id="loginPopup" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeLoginPopup()">&times;</span>
+        <h2>Login to Continue</h2>
+        <form id="loginForm" method="POST" action="{% url 'consumer_login' %}">
+            {% csrf_token %}
+            <input type="hidden" id="redirect_url" name="next" value="">
+            <label for="username">Username:</label>
+            <input  type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input  type="password" id="password" name="password" required>
+            <button class="buttonss"type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+
+
+<br>
+
+
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-image">
+            <img src="{% static 'img/Indian-Farmer.jpg' %}" alt="Farmers in Field">
+        </div>
+        <div class="about-content">
+            <h2><b>🌱 About Kisan Market</b></h2>
+            <p class="pbox">
+                <strong>Kisan Market</strong> is a platform dedicated to empowering farmers and delivering fresh,
+                high-quality agricultural products directly to consumers. We believe in fair trade, sustainability,
+                and creating a system that benefits both farmers and buyers.
+            </p>
+            <p class="pbox">
+                By eliminating unnecessary middlemen, we ensure <b>farmers</b> receive fair <b>prices</b> and <b>customers</b> get
+                farm-fresh products at the best <b>rates</b>.
+            </p>
+            <a href="aboutus" class="learn-more-btn">Learn More</a>
+        </div>
+    </div>
+</section>
+
+
+<section class="reviews-section">
+    <h2>🌟 What Our Consumers Say</h2>
+    <div class="reviews-container">
+        <div class="review">
+            <img src="{% static 'img/consumer1.jpg' %}" alt="User 1">
+            <p>"Kisan Market has changed the way I buy fresh products. The quality is amazing, and I love supporting local farmers!"</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <h4>- Anjali Sharma</h4>
+        </div>
+        <div class="review">
+            <img src="{% static 'img/consumer2.jpg' %}" alt="User 2">
+            <p>"Fresh vegetables at my doorstep at fair prices. Highly recommend Kisan Market for all fresh product needs!"</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <h4>- Rahul Verma</h4>
+        </div>
+        <div class="review">
+            <img src="{% static 'img/consumer3.jpg' %}" alt="User 3">
+            <p>"I love how easy it is to order directly from farmers. The quality is top-notch, and the prices are reasonable!"</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <h4>- Priya Sinha</h4>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="footer-container">
+        <div class="footer-section about">
+            <h2>Kisan eCommerce</h2>
+            <p>Connecting farmers directly with consumers for fresh and organic products.</p>
+        </div>
+
+        <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="product">Shop</a></li>
+                <li><a href="farmer_login">Farmer Login</a></li>
+                <li><a href="consumer_login">Consumer Login</a></li>
+                <li><a href="aboutus">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section contact">
+            <h2>Contact Us</h2>
+            <p>Email: support@kisanecommerce.com</p>
+            <p>Phone: +91 98765 43210</p>
+            <p>Address: Anushruti Tower, Ahmedabad, 380052</p>
+        </div>
+
+        <div class="footer-section-social">
+            <h2>Follow Us</h2>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Kisan eCommerce | All Rights Reserved</p>
+    </div>
+</footer>
+
+
+
+
+<script>
+    const texts = [
+        "Fresh from Farm to Your Home!",
+        "Empowering Farmers, Delivering Quality!",
+        "Fair Prices, Fresh Produce, Happy Farmers!"
+    ];
+
+    let index = 0;
+    const textElement = document.getElementById("animated-text");
+
+    function animateText() {
+        textElement.classList.remove("typing", "fade");
+        textElement.textContent = texts[index];
+
+        setTimeout(() => {
+            textElement.classList.add("typing");
+        }, 100);
+
+        setTimeout(() => {
+            textElement.classList.add("fade");
+        }, 2500);
+
+        index = (index + 1) % texts.length;
+    }  
+
+    setInterval(animateText, 4000);
+    animateText();
+
+
+    const images = [
+    '{% static "img/img3.jpg" %}',
+    '{% static "img/img1.jpg" %}', // Replace with your actual image paths
+    '{% static "img/img2.jpg" %}' ,
+    
+
+];
+
+let currentIndex = 0;
+const imgElement = document.getElementById('image');
+
+// Function to change the image
+function changeImage() {
+    // Fade out the current image
+    imgElement.classList.remove('fade');
+
+    // Change the image after a short delay
+    setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length; // Loop through images
+        imgElement.src = images[currentIndex];
+
+        // Fade in the new image
+        imgElement.classList.add('fade');
+    }, 1000); // Match this delay with the CSS transition duration
+}
+
+// Change image every 3 seconds (3000 milliseconds)
+setInterval(changeImage, 2000);
+
+// Initial fade-in
+imgElement.classList.add('fade');
+
+
+
+
+    // Function to handle product click
+    function handleProductClick(productId) {
+        console.log("Product clicked: " + productId);  // Log to console to verify it's triggered
+
+        // Check if the user is logged in (you can adjust this logic based on your actual login check)
+        var isLoggedIn = false; // Assume false for testing
+
+        if (!isLoggedIn) {
+            // If not logged in, show the login modal
+            document.getElementById("loginPopup").style.display = "block"; // Show modal
+            document.getElementById("redirect_url").value = window.location.href; // Store the current URL to redirect after login
+        } else {
+            // If logged in, perform your intended action (e.g., alert product ID)
+            alert("Product clicked: " + productId);
+        }
+    }
+
+    // Close the login modal
+    function closeLoginPopup() {
+        document.getElementById("loginPopup").style.display = "none"; // Hide modal
+    }
+
+    
+</script>
+
+{% endblock body %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Submitted</title>
+    <style>
+        body {
+            background-color: #f0fff0;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .popup {
+            background: white;
+            border: 2px solid #4CAF50;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        .popup h2 {
+            color: green;
+        }
+
+        .popup a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: green;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .popup a:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup">
+        <h2>{{ message }}</h2>
+        <a href="{% url 'consumer_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}All Products{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    h2 {
+        color: #2b7a2b;
+        font-weight: bold;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        color: #2b2b2b;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .card-text {
+        color: #555;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .card-img-top {
+        height: 250px;
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    
+    .modal-content {
+        background-color: #ffffff;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 12px;
+        max-width: 400px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        position: relative;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .modal-content h2 {
+        margin-bottom: 20px;
+        color: #2b7a2b;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    
+    .modal-content label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .modal-content input[type="text"],
+    .modal-content input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+    
+    .modal-content .btn {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        font-size: 1rem;
+        border: none;
+        background-color: #28a745;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    
+    .modal-content .btn:hover {
+        background-color: #218838;
+    }
+    
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 24px;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    
+    .close:hover {
+        color: #000;
+    }
+    .clickable-card {
+        cursor: pointer;
+    }
+    
+    
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">All Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 clickable-card" onclick="handleProductClick({{ product.id }})">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                    <img src="" class="card-img-top" alt="No Image">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                    <p class="card-text text-success fw-bold">₹{{ product.price }}</p>
+                </div>
+            </div>
+        </div>
+        
+        {% empty %}
+            <p class="text-center">No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Login Popup Modal -->
+<div id="loginPopup" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeLoginPopup()">&times;</span>
+        <h2>Login to Continue</h2>
+        <form id="loginForm" method="POST" action="{% url 'consumer_login' %}">
+            {% csrf_token %}
+            <input type="hidden" id="redirect_url" name="next" value="">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button class="btn btn-success w-100 mt-3" type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Function to handle product click
+    function handleProductClick(productId) {
+        console.log("Product clicked: " + productId);
+
+        // For now, assume user is not logged in
+        var isLoggedIn = false;
+
+        if (!isLoggedIn) {
+            document.getElementById("loginPopup").style.display = "block";
+            document.getElementById("redirect_url").value = window.location.href;
+        } else {
+            alert("Product clicked: " + productId);
+        }
+    }
+
+    // Close the login modal
+    function closeLoginPopup() {
+        document.getElementById("loginPopup").style.display = "none";
+    }
+</script>
+{% endblock %}

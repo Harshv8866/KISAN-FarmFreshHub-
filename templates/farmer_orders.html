@@ -1,0 +1,69 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Farmer Orders{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="alert alert-info text-center">
+        <h4 class="alert-heading">Your Orders</h4>
+        <p>Here you can see all the orders made by consumers for your products.</p>
+    </div>
+
+    <!-- Table for displaying orders -->
+    <h2>Orders for Your Products</h2>
+
+    {% if orders %}
+    <table style="
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        color: black;
+        font-family: Arial, sans-serif;
+    ">
+        <thead>
+            <tr style="background-color: #f0f0f0; color: black; border: 2px solid black;">
+                <th style="border: 1px solid black; padding: 10px;">Order ID</th>
+                <th style="border: 1px solid black; padding: 10px;">Customer</th>
+                <th style="border: 1px solid black; padding: 10px;">Amount (₹)</th>
+                <th style="border: 1px solid black; padding: 10px;">Paid</th>
+                <th style="border: 1px solid black; padding: 10px;">Shipping Name</th>
+                <th style="border: 1px solid black; padding: 10px;">Email</th>
+                <th style="border: 1px solid black; padding: 10px;">Phone</th>
+                <th style="border: 1px solid black; padding: 10px;">Full Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 10px;">{{ order.id }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">
+                        {{ order.user.first_name }} ({{ order.user.username }})
+                    </td>
+                    <td style="border: 1px solid black; padding: 10px;">₹{{ order.amount }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">
+                        {% if order.is_paid %}✔{% else %}❌{% endif %}
+                    </td>
+                    {% if order.shipping_address %}
+                        <td style="border: 1px solid black; padding: 10px;">{{ order.shipping_address.full_name }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{ order.shipping_address.email }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{ order.shipping_address.phone }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">
+                            {{ order.shipping_address.address }},
+                            {{ order.shipping_address.city }},
+                            {{ order.shipping_address.country }} -
+                            {{ order.shipping_address.postal_code }}
+                        </td>
+                    {% else %}
+                        <td colspan="4" style="border: 1px solid black; padding: 10px; text-align: center;">
+                            <em>No shipping address available</em>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No orders found for your products.</p>
+{% endif %}
+    </div>
+{% endblock %}

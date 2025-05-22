@@ -1,0 +1,40 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Track Order{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-success">📦 Track Your Order</h2>
+
+    <div class="card p-4 shadow-sm">
+        <h4>Order ID: #{{ order.id }}</h4>
+        <p><strong>Placed on:</strong> {{ order.created_at|date:"d M Y, h:i A" }}</p>
+        <p><strong>Payment Status:</strong> 
+            {% if order.is_paid %}
+                <span class="text-success fw-bold">Paid</span>
+            {% else %}
+                <span class="text-warning fw-bold">Pending</span>
+            {% endif %}
+        </p>
+        <p><strong>Total Amount:</strong> ₹{{ order.amount }}</p>
+
+        <hr>
+        <h5 class="text-info">Shipping Details</h5>
+        <p><strong>Name:</strong> {{ order.shipping_address.full_name }}</p>
+        <p><strong>Address:</strong> {{ order.shipping_address.address }}, 
+           {{ order.shipping_address.city }} - {{ order.shipping_address.postal_code }}</p>
+        <p><strong>Phone:</strong> {{ order.shipping_address.phone }}</p>
+
+        <hr>
+        <h5 class="text-info">Order Status:</h5>
+        <p>🛒 Order Placed</p>
+        <p>🚚 Shipped</p>
+        <p>📍 Out for Delivery</p>
+        <p>✅ Delivered</p>
+
+        <!-- Optionally show status based on logic if you store order status -->
+        <!-- <p><strong>Status:</strong> {{ order.status }}</p> -->
+    </div>
+
+    <a href="{% url 'consumer_dashboard' %}" class="btn btn-secondary mt-4">← Back to Dashboard</a>
+</div>
+{% endblock %}

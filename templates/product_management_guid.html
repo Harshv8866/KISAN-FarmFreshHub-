@@ -1,0 +1,78 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}Product Management Guide{% endblock %}
+{% block content %}
+    <style>
+
+        .guide-section {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="guide-section">
+            <h2>Product Management Guide</h2>
+            <p>Welcome to the product management guide for your Kisan eCommerce dashboard. This page will help you understand how to manage your products effectively on the platform.</p>
+
+            <div class="mt-4">
+                <h3>Step 1: Add New Products</h3>
+                <p>To add a new product to your shop, follow these steps:</p>
+                <ol>
+                    <li>Navigate to the <strong>Add Product</strong> section in your dashboard.</li>
+                    <li>Fill in the product details including name, description, price, and category.</li>
+                    <li>Upload an image of the product for better visibility.</li>
+                    <li>Click the <strong>Add Product</strong> button to save your product.</li>
+                </ol>
+                <a href="{% url 'add_product' %}" class="btn btn-primary">Go to Add Product</a>
+            </div>
+
+            <div class="mt-4">
+                <h3>Step 2: Manage Your Products</h3>
+                <p>Once your products are added, you can manage them from your product list:</p>
+                <ol>
+                    <li>Navigate to the <strong>Manage Products</strong> section.</li>
+                    <li>Here, you will see a list of all the products you have uploaded.</li>
+                    <li>You can edit or delete any product by clicking the respective option next to each product.</li>
+                </ol>
+                <a href="{% url 'manage_products' %}" class="btn btn-primary">Go to Manage Products</a>
+            </div>
+
+            <div class="mt-4">
+                <h3>Step 3: View Product Details</h3>
+                <p>If you want to see more details about any specific product:</p>
+                <ol>
+                    <li>Click on the product name in the product list.</li>
+                    <li>You will be taken to the <strong>Product Details</strong> page where you can view all the details of the product.</li>
+                </ol>
+                <a href="{% url 'product_detail' 1 %}" class="btn btn-primary">View Product Example</a>
+            </div>
+
+            <div class="mt-4">
+                <h3>Additional Tips</h3>
+                <ul>
+                    <li>Make sure to upload high-quality images for your products to attract more customers.</li>
+                    <li>Update the product description regularly to reflect accurate and detailed information.</li>
+                    <li>Track your inventory and adjust the quantity to avoid selling out of stock products.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+body {
+  background-color: #ffffff; /* Dark green theme */
+  height: 52.083vw; /* Ensure the body and html elements take up the full height */
+  margin: 0; /* Remove default margin */
+  padding: 0;
+  padding: 10px 20px;
+}
+
+
+  .nav-link {
+        font-family:  Arial, sans-serif; 
+        font-size:  20px; 
+         font-weight: 700; 
+         color:rgb(255, 255, 255);
+         -ms-text-size-adjust: auto;
+         /* border: 1px solid red; */
+         margin-left: 10px;
+        
+
+  }
+.nav-link:hover{
+  border: 0px solid hsla(0, 0%, 100%, 0.729) ;
+  border-radius: 15px;
+  
+ background-color: #28a745;
+}
+  .navbar {
+    
+    background-color: hsla(118, 100%, 15%, 0.729) !important; /* Blue with 50% transparency */
+    border-radius: 5px;
+    
+ 
+  }
+
+
+  .dropdown-menu {
+  background-color: transparent; 
+  }
+
+  .navbar-brand{
+    margin-left: 0px;
+  }
+
+
+
+
+
+
+  
+  
