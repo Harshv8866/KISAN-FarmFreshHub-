@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-{% load static%}
-
+{% load static %}
 {% block title %}All Products{% endblock %}
 
 {% block body %}
@@ -160,7 +159,7 @@
             <div class="card h-100 clickable-card" onclick="handleProductClick({{ product.id }})">
                 {% if product.image %}
                 
-                    <img src=" {% static 'img/{{ product.image.url }}'%}" class="card-img-top" alt="{{ product.name }}">
+<img src="{% static 'img/' %}{{ product.image_name }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
                     <img src="" class="card-img-top" alt="No Image">
                 {% endif %}
