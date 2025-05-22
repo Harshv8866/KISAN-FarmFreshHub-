@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-u6xfzsd%_m^h5a0rgc8ogla@_6_1f0h9+tp+*h4au_zl-%284@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['KISAN(FarmFreshHub).onrender.com', 'www.yourfreedomain.tk']
+ALLOWED_HOSTS = ['*']
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Application definition
